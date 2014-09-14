@@ -20,9 +20,12 @@ def signup():
         login = request.form['login']
         email = request.form['email']
         password = request.form['password']
-        Joueur(login=login, email=email, password=password)
-        commit()
-        return("Enregistrement effectué")
+        try:
+            Joueur(login=login, email=email, password=password)
+            commit()
+            return("Enregistrement effectué")
+        except CommitException:
+            return("Ce pseudo est déjà utilisé !")
     else:
         return render_template('signup.html')
 
@@ -48,6 +51,5 @@ def logout():
 
 if __name__ == "__main__":
     sql_debug(True)
-    db.generate_mapping(create_tables=True)
     app.secret_key = secret_key
     app.run(host='::', debug=True)

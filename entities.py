@@ -5,8 +5,8 @@ db = Database("sqlite", "database.sqlite", create_db=True)
 
 class Joueur(db.Entity):
     id = PrimaryKey(int, auto=True)
-    login = Required(unicode)
-    email = Required(str)
+    login = Required(unicode, unique = True)
+    email = Required(str, unique = True)
     password = Required(unicode)
     ville = Optional("Ville")
     inventaire = Set("Objet")
@@ -37,3 +37,5 @@ class Nourriture(Objet):
     def utiliser(joueur):
         if joueur.faim > 0:
             joueur.faim -= 1
+
+db.generate_mapping(create_tables=True)
