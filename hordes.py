@@ -32,7 +32,7 @@ def login():
         login = request.form['login']
         password = request.form['password']
         joueur = Joueur.get(login=login)
-        if joueur.check_password(password):
+        if joueur is not None and joueur.check_password(password): #joueur is none if login doesn't exist
             return("Vous êtes maintenant connecté")
         else:
             return("Mauvaise combinaison pseudo/mot de passe !")
