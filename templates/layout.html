@@ -7,11 +7,24 @@
     {% endblock %}
   </head>
   <body>
+    <div>
+        <ul>
+            <li class="menu_li"><a href="/">Zombies</a></li>
+            <li class="menu_li"><a href="/home">Baraque</a></li>
+            <li class="menu_li"><a href="/bank">Banque</a></li>
+            {% if 'login' in session %}
+                <li class="menu_li"><a href="/logout">Se déconnecter</a></li>
+                <li class="menu_li">Connecté en tant que {{ session['login'] }}</li>
+            {% else %}
+                <li class="menu_li"><a href="/signup">S'enregistrer</a></li>
+                <li class="menu_li"><a href="/login">Se connecter</a></li>
+            {% endif %}
+        </ul>
+    </div>
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
-      {% block footer %}
-      &copy; Copyright 2010 by <a href="http://domain.invalid/">The Game</a>.
-      {% endblock %}
+      Take a look at my code ! <a href="https://github.com/pastelomumuse/Zombies">Made by Pierre Gillet</a>.
     </div>
   </body>
 </html>
+

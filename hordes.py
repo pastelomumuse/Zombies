@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 from entities import *
+from local import secret_key
 app = Flask(__name__)
 
 @app.route("/")
@@ -33,13 +34,20 @@ def login():
         password = request.form['password']
         joueur = Joueur.get(login=login)
         if joueur is not None and joueur.check_password(password): #joueur is none if login doesn't exist
-            return("Vous êtes maintenant connecté")
+            session['login'] = joueur.login
+            return redirect(url_for('index'))
         else:
             return("Mauvaise combinaison pseudo/mot de passe !")
     else:
         return render_template('login.html')
 
+@app.route("/logout")
+def logout():
+    session.pop('login', None)
+    return redirect(url_for('index'))
+
 if __name__ == "__main__":
     sql_debug(True)
     db.generate_mapping(create_tables=True)
+    app.secret_key = secret_key
     app.run(host='::', debug=True)
