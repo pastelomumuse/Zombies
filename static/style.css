@@ -1,0 +1,8 @@
+.menu_li {
+    display: inline;
+}
+
+.menu_li>a {
+    color: red;
+    text-decoration: none;
+}
